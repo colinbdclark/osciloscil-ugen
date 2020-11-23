@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>osciloscil ugen demo</title>
+        <script src="node_modules/flocking/dist/flocking-all.js"></script>
+        <script src="node_modules/flocking/src/ui/play-button/js/play-button.js"></script>
+        <script src="node_modules/nexusui/dist/NexusUI.js"></script>
+        <script src="src/scaling-osc.js"></script>
+        <script src="src/oscil-oscil.js"></script>
+        <script src="demo.js"></script>
+    </head>
+    <body>
+        <div id="scope"></div>
+        <div id="spectogram"></div>
+
+        <button>Play</button>
+
+        <script>
+            window.demo = flock.demo.oscilOscil("button");
+        </script>
+    </body>
+</html>

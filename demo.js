@@ -8,14 +8,29 @@ fluid.defaults("flock.demo.oscilOscil", {
 
         playButton: {
             type: "flock.ui.enviroPlayButton",
-            container: "{oscilOscil}.container"
+            container: "{oscilOscil}.container",
+            options: {
+                listeners: {
+                    // Due to a bug in Flocking, we need to
+                    // connect/disconnect the Nexus components
+                    // whenever the environment is played or pauses.
+                    "onPlay.connectVisualization": {
+                        func: "{nexusui}.events.onConnect.fire"
+                    },
+                    "onPause.disconnectVisualization": {
+                        func: "{nexusui}.events.onDisconnect.fire"
+                    }
+                }
+            }
         },
 
         synth: {
             type: "flock.demo.oscilOscil.synth"
         },
+
         nexusui: {
-            type: "flock.demo.oscilOscil.nexusui"
+            type: "flock.demo.oscilOscil.nexusui",
+            container: ".viz"
         }
     }
 });
@@ -52,18 +67,67 @@ fluid.defaults("flock.demo.oscilOscil.synth", {
 
 
 fluid.defaults("flock.demo.oscilOscil.nexusui", {
-    gradeNames: "fluid.component",
+    gradeNames: "fluid.viewComponent",
+
+    members: {
+        scope: null,
+        spectrogram: null
+    },
+
+    model: {
+        width: 300,
+        height: 100
+    },
+
+    selectors: {
+        scope: "#scope",
+        spectogram: "#spectogram"
+    },
+
+    events: {
+        onConnect: null,
+        onDisconnect: null
+    },
+
     listeners: {
-        onCreate: {
-            func: function(){
-                let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-                let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-                width -=15;
-                let oscilloscope = new Nexus.Oscilloscope('#scope', {size: [width, 100]});
-                let spectrogram = new Nexus.Spectrogram('#spectogram', {size: [width, 100]})
-                oscilloscope.connect(flock.environment.audioSystem.nativeNodeManager.outputNode);
-                spectrogram.connect(flock.environment.audioSystem.nativeNodeManager.outputNode);
-            }
+        "onCreate.createElements": {
+            funcName: "flock.demo.oscilOscil.nexusui.createElements",
+            args: ["{that}", "{enviro}"],
+        },
+        "onConnect.connectScope": {
+            "this": "{that}.scope",
+            method: "connect",
+            args: "{enviro}.audioSystem.nativeNodeManager.outputNode"
+        },
+
+        "onConnect.connectSpectrum": {
+            "this": "{that}.spectogram",
+            method: "connect",
+            args: "{enviro}.audioSystem.nativeNodeManager.outputNode"
+        },
+
+        "onDisconnect.disconnectScope": {
+            "this": "{that}.scope",
+            method: "disconnect",
+            args: "{enviro}.audioSystem.nativeNodeManager.outputNode"
+        },
+
+        "onDisconnect.disconnectSpectrum": {
+            "this": "{that}.spectogram",
+            method: "disconnect",
+            args: "{enviro}.audioSystem.nativeNodeManager.outputNode"
         }
     }
 });
+
+flock.demo.oscilOscil.nexusui.createElements = function( that, enviro){
+
+    that.model.width = that.container.innerWidth();
+
+    that.scope = new Nexus.Oscilloscope( that.options.selectors.scope, {
+        size: [that.model.width, that.model.height]
+    });
+    that.spectogram = new Nexus.Spectrogram(that.options.selectors.scope, {
+        size: [that.model.width, that.model.height]}
+    );
+};

@@ -122,12 +122,12 @@ fluid.defaults("flock.demo.oscilOscil.nexusui", {
 
 flock.demo.oscilOscil.nexusui.createElements = function( that, enviro){
 
-    that.model.width = that.container.innerWidth();
+    that.applier.change("width", that.container.innerWidth());
 
     that.scope = new Nexus.Oscilloscope( that.options.selectors.scope, {
         size: [that.model.width, that.model.height]
     });
     that.spectogram = new Nexus.Spectrogram(that.options.selectors.scope, {
-        size: [that.model.width, that.model.height]}
-    );
+        size: [that.model.width, that.model.height]
+    });
 };

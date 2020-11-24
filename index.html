@@ -11,15 +11,16 @@
         <script src="demo.js"></script>
     </head>
     <body>
-        <div class="viz">
-            <span id="scope"></span>
-            <span id="spectogram"></span>
+        <div id="osciloscil">
+            <div id="viz">
+                <span id="scope"></span>
+                <span id="spectogram"></span>
+            </div>
+            <button id="playButton">Play</button>
         </div>
 
-        <button>Play</button>
-
         <script>
-            window.demo = flock.demo.oscilOscil("button");
+            window.demo = flock.demo.oscilOscil("#osciloscil");
         </script>
     </body>
 </html>

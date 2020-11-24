@@ -1,6 +1,11 @@
 fluid.defaults("flock.demo.oscilOscil", {
     gradeNames: "fluid.viewComponent",
 
+    selectors: {
+        playButton: "#playButton",
+        nexusui: "#viz"
+    },
+
     components: {
         enviro: {
             type: "flock.enviro"
@@ -8,7 +13,7 @@ fluid.defaults("flock.demo.oscilOscil", {
 
         playButton: {
             type: "flock.ui.enviroPlayButton",
-            container: "{oscilOscil}.container",
+            container: "{oscilOscil}.options.selectors.playButton",
             options: {
                 listeners: {
                     // Due to a bug in Flocking, we need to
@@ -30,7 +35,7 @@ fluid.defaults("flock.demo.oscilOscil", {
 
         nexusui: {
             type: "flock.demo.oscilOscil.nexusui",
-            container: ".viz"
+            container: "{oscilOscil}.options.selectors.nexusui"
         }
     }
 });
@@ -65,7 +70,6 @@ fluid.defaults("flock.demo.oscilOscil.synth", {
     }
 });
 
-
 fluid.defaults("flock.demo.oscilOscil.nexusui", {
     gradeNames: "fluid.viewComponent",
 
@@ -99,19 +103,16 @@ fluid.defaults("flock.demo.oscilOscil.nexusui", {
             method: "connect",
             args: "{enviro}.audioSystem.nativeNodeManager.outputNode"
         },
-
         "onConnect.connectSpectrum": {
             "this": "{that}.spectogram",
             method: "connect",
             args: "{enviro}.audioSystem.nativeNodeManager.outputNode"
         },
-
         "onDisconnect.disconnectScope": {
             "this": "{that}.scope",
             method: "disconnect",
             args: "{enviro}.audioSystem.nativeNodeManager.outputNode"
         },
-
         "onDisconnect.disconnectSpectrum": {
             "this": "{that}.spectogram",
             method: "disconnect",

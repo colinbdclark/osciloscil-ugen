@@ -94,9 +94,18 @@ fluid.defaults("flock.demo.oscilOscil.nexusui", {
     },
 
     listeners: {
-        "onCreate.createElements": {
-            funcName: "flock.demo.oscilOscil.nexusui.createElements",
-            args: ["{that}", "{enviro}"],
+        "onCreate.setWidth":{
+            priority: "first",
+            funcName: "flock.demo.oscilOscil.nexusui.setWidth",
+            args: "{that}"
+        },
+        "onCreate.createScope": {
+            funcName: "flock.demo.oscilOscil.nexusui.createScope",
+            args: "{that}"
+        },
+        "onCreate.createSpectrum":{
+            funcName: "flock.demo.oscilOscil.nexusui.createSpectrum",
+            args: "{that}"
         },
         "onConnect.connectScope": {
             "this": "{that}.scope",
@@ -121,14 +130,18 @@ fluid.defaults("flock.demo.oscilOscil.nexusui", {
     }
 });
 
-flock.demo.oscilOscil.nexusui.createElements = function( that, enviro){
+flock.demo.oscilOscil.nexusui.setWidth= function( that ){
+    that.applier.change( "width", that.container.innerWidth() );
+};
 
-    that.applier.change("width", that.container.innerWidth());
-
+flock.demo.oscilOscil.nexusui.createSpectrum = function( that ){
     that.scope = new Nexus.Oscilloscope( that.options.selectors.scope, {
         size: [that.model.width, that.model.height]
     });
-    that.spectogram = new Nexus.Spectrogram(that.options.selectors.scope, {
+};
+
+flock.demo.oscilOscil.nexusui.createScope = function( that ){
+    that.spectogram = new Nexus.Spectrogram( that.options.selectors.scope, {
         size: [that.model.width, that.model.height]
     });
 };

@@ -14,5 +14,8 @@
     "dependencies": {
         "flocking": "3.0.0-dev.20201125T044807Z.e93e401",
         "nexusui": "2.1.6"
+    },
+    "devDependencies": {
+        "sheep-benchmark": "colinbdclark/sheep.js"
     }
 }

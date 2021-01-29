@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Pitch-scaling osc vs. regular osc unit generator benchmarks</title>
+
+        <link rel="stylesheet" type="text/css" href="../../../node_modules/sheep-benchmark/css/sheep.css" />
+
+        <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/Fluid.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/FluidDebugging.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/FluidIoC.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/DataBinding.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/ModelTransformation.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/ModelTransformationTransforms.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/enhancement/js/ContextAwareness.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/FluidDocument.js"></script>
+        <script src="../../../node_modules/infusion/src/framework/core/js/FluidView.js"></script>
+
+        <script src="../../../node_modules/flocking/dist/flocking-all.js"></script>
+
+        <script src="../../../node_modules/sheep-benchmark/third-party/js/spin.min.js"></script>
+        <script src="../../../node_modules/sheep-benchmark/js/sheep.js"></script>
+        <script src="pitch-scaling-osc-benchmark.js"></script>
+    </head>
+
+    <body id="body">
+
+        <script type="text/javascript">
+            flock.test.pitchScalingOscBenchmark();
+        </script>
+    </body>
+</html>
